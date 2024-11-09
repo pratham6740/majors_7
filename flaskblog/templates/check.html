@@ -1,0 +1,14 @@
+<h2>{{ post.title }}</h2>
+<p>{{ post.content }}</p>
+
+<h3>Comments</h3>
+{% for comment in post.comments %}
+    <p>{{ comment.content }}</p>
+{% endfor %}
+
+<h3>Leave a Comment</h3>
+<form method="post" action="{{ url_for('post', post_id=post.id) }}">
+    {{ form.hidden_tag() }}
+    {{ form.content.label }} {{ form.content() }}
+    {{ form.submit() }}
+</form>

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content%}
+    {% for post in posts %}
+    <div class="card">
+      <!-- Upper Section -->
+      <div class="upper-section">
+          <div class="company-logo">
+              <img src="{{ post.company_logo_url }}" alt="Company Logo">
+          </div>
+          <div class="detail-section">
+              <a href="#">{{ post.title }} | {{ post.role }} | {{ post.experience_level }} | {{ post.interview_date }}</a>
+              <div class="info">
+                  <span> Rounds: {{ post.round }}</span> |
+                  <span>{{ post.coding_problems }}</span>
+              </div>
+          </div>
+      </div>
+
+      <!-- Profile Details Section -->
+      <div class="profile-details">
+          <div class="profile-image">
+              <img src = {{post.author.image_file}} alt="User Profile">
+          </div>
+          <div class="profile-info">
+              <div class="name">{{ post.author.username }}</div>
+              <div class="name">{{ post.author.name }}</div>
+              <div class="experience">{{ post.user_experience }}</div>
+              <div class="status">{{ post.verdict }}</div>
+          </div>
+      </div>
+
+      <!-- Engagement Section -->
+      <div class="engagement">
+          <div><i class="fas fa-eye"></i> {{ post.views }}</div>
+          <div><i class="fas fa-comments"></i> {{ post.comments }}</div>
+          <div><i class="fas fa-thumbs-up"></i> {{ post.upvotes }}</div>
+      </div>
+  </div>
+
+    {% endfor %}
+{% endblock content %}

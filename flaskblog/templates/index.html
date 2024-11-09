@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        #animation-container {
+            display: none;
+            text-align: center;
+            margin-top: 20%;
+        }
+    </style>
+</head>
+<body>
+    <a href="#" id="start-animation">Click here to start animation</a>
+    <div id="animation-container">
+        <h1 id="welcome-message" class="animate__animated">Welcome to MANIT</h1>
+        <h1 id="flask-message" class="animate__animated">This site is made using Flask</h1>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#start-animation').click(function(event) {
+                event.preventDefault();
+                $('#start-animation').hide();
+                $('#animation-container').show();
+                $('#welcome-message').addClass('animate__fadeIn');
+
+                setTimeout(function() {
+                    $('#welcome-message').removeClass('animate__fadeIn').addClass('animate__fadeOut');
+                    setTimeout(function() {
+                        $('#welcome-message').hide();
+                        $('#flask-message').show().addClass('animate__fadeIn');
+                        setTimeout(function() {
+                            $('#flask-message').removeClass('animate__fadeIn').addClass('animate__fadeOut');
+                            setTimeout(function() {
+                                window.location.href = "{{ url_for('home') }}";
+                            }, 1000);
+                        }, 2000);
+                    }, 1000);
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
