@@ -9,6 +9,10 @@
 
 <script>
     async function summarizePost() {
+        document.getElementById('summarizeButton').style.display = 'none';;
+        summarizeButton.disabled = true;  // Disable the button
+        document.getElementById('wait').style.display = 'block';
+        document.getElementById('summarized').style.display = 'none';
         // Read results data from the hidden element and parse it
         const resultsData = document.getElementById("results-data").textContent;
         console.log(resultsData)
@@ -29,11 +33,15 @@
         } else {
             document.querySelector(`#summarized`).innerText = "Summary generation failed!";
         }
+        // Hide the wait div (loader) and show the summary
+        document.getElementById('wait').style.display = 'none';
+        document.getElementById('summarized').style.display = 'block';
     }
 </script>
 
 <!-- Button and Summary Output -->
-<button onclick="summarizePost()">Summarize</button>
+<button id="summarizeButton" onclick="summarizePost()">Summarize</button>
+<div id="wait" class="loader" style="display:none;"></div>
 <div id="summarized" class="summary"></div>
 <div class="row">
 
