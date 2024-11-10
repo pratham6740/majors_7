@@ -22,7 +22,7 @@
                 results: results.map(result => result.content)  // Pass only post content for summarization
             })
         });
-
+        
         if (response.ok) {
             const summary = await response.json();
             document.querySelector(`#summarized`).innerText = summary[0].summary_text;
@@ -33,18 +33,17 @@
 </script>
 
 <!-- Button and Summary Output -->
-<br/>
 <button onclick="summarizePost()">Summarize</button>
 <div id="summarized" class="summary"></div>
+<div class="row">
 
-<h2>You Searched for...</h2>
-<p>{{ query }}</p>
-
-<!-- Display Search Results -->
-{% for post in results %}
+    <!-- Display Search Results -->
+    {% for post in results %}
+    
     <div class="card">
-        <!-- Upper Section -->
-        <div class="upper-section">
+        <a class="card-link" href="{{ url_for('post', post_id=post.id) }}">
+            <!-- Upper Section -->
+            <div class="upper-section">
             <div class="company-logo">
                 <img src="{{ post.company_logo_url }}" alt="Company Logo">
             </div>
@@ -56,7 +55,7 @@
                 </div>
             </div>
         </div>
-
+        
         <!-- Profile Details Section -->
         <div class="profile-details">
             <div class="profile-image">
@@ -68,13 +67,15 @@
                 <div class="status">{{ post.verdict }}</div>
             </div>
         </div>
-
+        
         <!-- Engagement Section -->
         <div class="engagement">
             <div><i class="fas fa-eye"></i> {{ post.views }}</div>
             <div><i class="fas fa-comments"></i> {{ post.comments }}</div>
             <div><i class="fas fa-thumbs-up"></i> {{ post.upvotes }}</div>
         </div>
-    </div>
+    </a>
+</div>
+
 {% endfor %}
 {% endblock content %}
