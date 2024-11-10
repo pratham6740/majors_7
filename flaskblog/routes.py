@@ -53,28 +53,35 @@ def search():
 
 @app.route("/summarise", methods=["POST"])
 def summarise():
-    # Create the document to summarize.
-    data=request.get_json()
-    results=data.get("results", [])
+    # Extract results from the request body
+    data = request.get_json()
+    results = data.get("results", [])
 
-    doc = "Generate the summary for the following experiences:"
+    # Create the document to summarize
+    prompt = "Generate the summary for the following experiences:"
     for i, res in enumerate(results):
         if i >= 5:
             break
-        doc += " " + res
+        prompt += " " + res
 
-    # Send request to Hugging Face API
+    print("Prompt=",prompt)
+    prompt="what is the meaning of life"
     response = requests.post(
         url=os.getenv("url"),
-        headers={"Authorization": os.getenv("token")},
-        json={"inputs": doc},
+        headers={
+            "Authorization": os.getenv("token"),
+        },
+        json=json.dumps({"inputs": prompt})
     )
 
     # Check for errors and extract summary
     if response.status_code == 200:
-        summary = response.json()
-        return jsonify(summary)
+        summary = response.json()[0]
+        print(summary)
+        return summary
     else:
+        # Log error response for debugging
+        print("Error Response:", response.text)
         return jsonify({"error": response.text}), response.status_code
 
 
