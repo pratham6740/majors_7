@@ -62,10 +62,10 @@ def summarise():
     for i, res in enumerate(results):
         if i >= 5:
             break
-        prompt += " " + res
+        prompt += ". Next experience: " + res
 
     print("Prompt=",prompt)
-    prompt="what is the meaning of life"
+
     response = requests.post(
         url=os.getenv("url"),
         headers={
