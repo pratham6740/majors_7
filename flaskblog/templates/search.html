@@ -29,7 +29,7 @@
         
         if (response.ok) {
             const summary = await response.json();
-            document.querySelector(`#summarized`).innerText = summary[0].summary_text;
+            document.querySelector(`#summarized`).innerText = summary.summary_text;
         } else {
             document.querySelector(`#summarized`).innerText = "Summary generation failed!";
         }
@@ -53,7 +53,7 @@
             <!-- Upper Section -->
             <div class="upper-section">
             <div class="company-logo">
-                <img src="{{ post.company_logo_url }}" alt="Company Logo">
+                <img src="{{ url_for('static', filename='logos/' + post.title|lower + '.svg') }}" alt="Company Logo">
             </div>
             <div class="detail-section">
                 <div>{{ post.title }} | {{ post.role }} | {{ post.interview_date }}</div>
