@@ -32,5 +32,21 @@ class Post(db.Model):
     round = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "branch": self.branch,
+            "verdict": self.verdict,
+            "type": self.type,
+            "interview_date": self.interview_date,
+            "date_posted": self.date_posted.isoformat(),
+            "content": self.content,
+            "role": self.role,
+            "round": self.round,
+            "user_id": self.user_id,
+            # Add any other fields you need here
+        }
+    
     def __repr__(self):
         return f"Post('{self.title}' , '{self.date_posted}')"

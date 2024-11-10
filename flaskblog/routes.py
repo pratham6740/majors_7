@@ -45,9 +45,10 @@ def search():
     print(search_query)
     # Use SQLAlchemy to filter posts by company name using case-insensitive matching
     results = Post.query.filter(Post.title.ilike(f"%{search_query}%")).all()
-
+    serialized_results = [post.to_dict() for post in results]  # Serialize each post
+    print(serialized_results)
     # Render the search results page with matched posts
-    return render_template("search.html", results=results, query=search_query)
+    return render_template("search.html", results=results, serialized_results=serialized_results, query=search_query)
 
 
 @app.route("/summarise", methods=["POST"])

@@ -1,46 +1,80 @@
 {% extends "layout.html" %}
 
-{% block content%}
-  <br/>
-<h2> You Searched for..</h2>
+{% block content %}
+
+<!-- Store results JSON in a hidden element -->
+<div id="results-data" style="display:none;">
+    {{ serialized_results | tojson }}
+</div>
+
+<script>
+    async function summarizePost() {
+        // Read results data from the hidden element and parse it
+        const resultsData = document.getElementById("results-data").textContent;
+        console.log(resultsData)
+        const results = JSON.parse(resultsData);
+        const response = await fetch(`/summarise`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                results: results.map(result => result.content)  // Pass only post content for summarization
+            })
+        });
+
+        if (response.ok) {
+            const summary = await response.json();
+            document.querySelector(`#summarized`).innerText = summary[0].summary_text;
+        } else {
+            document.querySelector(`#summarized`).innerText = "Summary generation failed!";
+        }
+    }
+</script>
+
+<!-- Button and Summary Output -->
+<br/>
+<button onclick="summarizePost()">Summarize</button>
+<div id="summarized" class="summary"></div>
+
+<h2>You Searched for...</h2>
 <p>{{ query }}</p>
 
-    {% for post in results %}
+<!-- Display Search Results -->
+{% for post in results %}
     <div class="card">
-      <!-- Upper Section -->
-      <div class="upper-section">
-          <div class="company-logo">
-              <img src="{{ post.company_logo_url }}" alt="Company Logo">
-          </div>
-          <div class="detail-section">
-              <a href="#">{{ post.title }} | {{ post.role }} | {{ post.experience_level }} | {{ post.interview_date }}</a>
-              <div class="info">
-                  <span> Rounds: {{ post.round }}</span> |
-                  <span>{{ post.coding_problems }}</span>
-              </div>
-          </div>
-      </div>
-      
-      <!-- Profile Details Section -->
-      <div class="profile-details">
-          <div class="profile-image">
-              <img src = {{post.author.image_file}} alt="User Profile">
-          </div>
-          <div class="profile-info">
-              <div class="name">{{ post.author.username }}</div>
-              <div class="name">{{ post.author.name }}</div>
-              <div class="experience">{{ post.user_experience }}</div>
-              <div class="status">{{ post.verdict }}</div>
-          </div>
-      </div>
+        <!-- Upper Section -->
+        <div class="upper-section">
+            <div class="company-logo">
+                <img src="{{ post.company_logo_url }}" alt="Company Logo">
+            </div>
+            <div class="detail-section">
+                <div>{{ post.title }} | {{ post.role }} | {{ post.interview_date }}</div>
+                <div class="info">
+                    <span>Rounds: {{ post.round }}</span> |
+                    <span>{{ post.coding_problems }}</span>
+                </div>
+            </div>
+        </div>
 
-      <!-- Engagement Section -->
-      <div class="engagement">
-          <div><i class="fas fa-eye"></i> {{ post.views }}</div>
-          <div><i class="fas fa-comments"></i> {{ post.comments }}</div>
-          <div><i class="fas fa-thumbs-up"></i> {{ post.upvotes }}</div>
-      </div>
-  </div>
+        <!-- Profile Details Section -->
+        <div class="profile-details">
+            <div class="profile-image">
+                <img src="{{ post.author.image_file }}" alt="User Profile">
+            </div>
+            <div class="profile-info">
+                <div class="name">{{ post.author.name }}</div>
+                <div class="experience">{{ post.user_experience }}</div>
+                <div class="status">{{ post.verdict }}</div>
+            </div>
+        </div>
 
-    {% endfor %}
+        <!-- Engagement Section -->
+        <div class="engagement">
+            <div><i class="fas fa-eye"></i> {{ post.views }}</div>
+            <div><i class="fas fa-comments"></i> {{ post.comments }}</div>
+            <div><i class="fas fa-thumbs-up"></i> {{ post.upvotes }}</div>
+        </div>
+    </div>
+{% endfor %}
 {% endblock content %}
