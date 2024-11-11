@@ -25,7 +25,7 @@
             <!-- Profile Details Section -->
             <div class="profile-details">
                 <div class="profile-image">
-                    <img src="{{ post.author.image_file }}" alt="User Profile">
+                    <img src="{{ url_for('static', filename='profile_pics/' +'default.jpg') }}" alt="{{ post.title }} Logo">
                 </div>
                 <div class="profile-info">
                     <div class="name">{{ post.author.name }}</div>
