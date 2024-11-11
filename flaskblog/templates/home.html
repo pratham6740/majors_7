@@ -1,9 +1,22 @@
 {% extends "layout.html" %}
 
 {% block content%}
+<form class="filter" method="GET" action="{{ url_for('home') }}">
+    {{ form.hidden_tag() }} <!-- This is for CSRF protection -->
+    
+        {{ form.branch() }}
+    
+        {{ form.type() }}
+    
+        {{ form.title() }}
+    
+        {{ form.verdict() }}
+    
+        {{ form.submit() }}
+</form>
 <div class="row">
 
-    {% for post in posts %}
+    {% for post in results %}
     
     
     <div class="card">

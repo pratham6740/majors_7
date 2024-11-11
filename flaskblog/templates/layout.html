@@ -22,13 +22,6 @@
         <div class="navbar-nav mr-auto">
           <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
           <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
-            {% if current_user.is_authenticated%}
-           <form method="GET" action="{{ url_for('search') }}" class="d-flex">
-               {{form.hidden_tag() }}
-               <input class="form-control custom-search-bar custom-gap" type="search" placeholder="Search" aria-label="Search" name="searched">
-               <button class="btn btn-outline-secondary custom-search-button custom-gap" type="submit" >Search</button>
-           </form>
-            {% endif %}
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">

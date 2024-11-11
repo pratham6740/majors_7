@@ -38,7 +38,33 @@
         document.getElementById('summarized').style.display = 'block';
     }
 </script>
-
+<form class="filter" method="GET" action="{{ url_for('search') }}">
+    <select name="branch">
+        <option value="">All Branches</option>
+        <option value="cse">Computer Science Engineering</option>
+        <option value="ece">Electronics & Communication Engineering</option>
+        <!-- Add other branches as needed -->
+    </select>
+    <select name="type">
+        <option value="">All Types</option>
+        <option value="FTE+6M">FTE + 6M</option>
+        <option value="FTE">FTE</option>
+        <option value="Internship">Internship (2M/6M)</option>
+    </select>
+    <select name="title">
+        <option value="">All Companies</option>
+        <option value="Amazon">Amazon</option>
+        <option value="Reliance">Reliance</option>
+        <option value="Microsoft">Microsoft</option>
+        <!-- Add other company options as needed -->
+    </select>
+    <select name="verdict">
+        <option value="">All Verdicts</option>
+        <option value="Selected">Selected</option>
+        <option value="Not Selected">Not Selected</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
 <!-- Button and Summary Output -->
 <button id="summarizeButton" onclick="summarizePost()">Summarize</button>
 <div id="wait" class="loader" style="display:none;"></div>

@@ -142,3 +142,15 @@ body { font-family: Arial, sans-serif; display: flex; justify-content: center; p
   66.67% { background-position: 0 calc(50% - var(--s)/16), 0 calc(50% + var(--s)/16), 50% 0, 50% 100%, 100% 0, 100% 100% }
   83.33% { background-position: 0 calc(50% - var(--s)/16), 0 calc(50% + var(--s)/16), 50% calc(50% - var(--s)/16), 50% calc(50% + var(--s)/16), 100% 0, 100% 100% }
 }
+
+.filter > select{
+  height: 2rem;
+  margin-right: 1rem;
+  width: 100%;
+}
+
+.filter {
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+}

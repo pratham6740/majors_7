@@ -21,9 +21,38 @@ load_dotenv()
 @app.route("/")
 @app.route("/home")
 def home():
+    # Get the search and filter parameters from URL parameters (GET request)
+    search_query = request.args.get("searched", "")
+    branch = request.args.get("branch", "")
+    type_filter = request.args.get("type", "")
+    title = request.args.get("title", "")
+    verdict = request.args.get("verdict", "")
+
+    # Initialize query with all posts
     posts = Post.query.all()
     posts = posts[::-1]
-    return render_template("home.html", posts=posts)
+    query = Post.query
+
+    # Apply search query filter
+    if search_query:
+        query = query.filter(Post.title.ilike(f"%{search_query}%"))
+
+    # Apply additional filters if provided
+    if branch:
+        query = query.filter(Post.branch == branch)
+    if type_filter:
+        query = query.filter(Post.type == type_filter)
+    if title:
+        query = query.filter(Post.title == title)
+    if verdict:
+        query = query.filter(Post.verdict == verdict)
+
+    # Execute the filtered query and serialize results
+    results = query.all()
+    serialized_results = [post.to_dict() for post in results]
+
+    # Render the search results page with matched posts
+    return render_template("home.html", results=results, serialized_results=serialized_results, query=search_query)
 
 
 @app.route("/about")
@@ -40,16 +69,36 @@ def base():
 # creating a search function
 @app.route("/search")
 def search():
-    # Get the search query from URL parameters (GET request)
+    # Get the search and filter parameters from URL parameters (GET request)
     search_query = request.args.get("searched", "")
-    print(search_query)
-    # Use SQLAlchemy to filter posts by company name using case-insensitive matching
-    results = Post.query.filter(Post.title.ilike(f"%{search_query}%")).all()
-    serialized_results = [post.to_dict() for post in results]  # Serialize each post
-    print(serialized_results)
+    branch = request.args.get("branch", "")
+    type_filter = request.args.get("type", "")
+    title = request.args.get("title", "")
+    verdict = request.args.get("verdict", "")
+
+    # Initialize query with all posts
+    query = Post.query
+
+    # Apply search query filter
+    if search_query:
+        query = query.filter(Post.title.ilike(f"%{search_query}%"))
+
+    # Apply additional filters if provided
+    if branch:
+        query = query.filter(Post.branch == branch)
+    if type_filter:
+        query = query.filter(Post.type == type_filter)
+    if title:
+        query = query.filter(Post.title == title)
+    if verdict:
+        query = query.filter(Post.verdict == verdict)
+
+    # Execute the filtered query and serialize results
+    results = query.all()
+    serialized_results = [post.to_dict() for post in results]
+
     # Render the search results page with matched posts
     return render_template("search.html", results=results, serialized_results=serialized_results, query=search_query)
-
 
 @app.route("/summarise", methods=["POST"])
 def summarise():

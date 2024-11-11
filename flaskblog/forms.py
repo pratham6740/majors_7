@@ -7,7 +7,35 @@ from flaskblog.models import User
 
 class SearchForm(FlaskForm):
     searched = StringField('Searched', validators=[DataRequired()])
-    submit = SubmitField('Submit') 
+    
+    # Adding filters based on Post attributes
+    branch = SelectField('Branch', choices=[('', 'All Branches'), ('cse', 'Computer Science Engineering'), 
+                                            ('ece', 'Electronics & Communication Engineering'),
+                                            ('ee', 'Electrical Engineering'), 
+                                            ('mech', 'Mechanical Engineering'),
+                                            ('mme', 'Metallurgical and Materials Engineering'), 
+                                            ('chem', 'Chemical Engineering'),
+                                            ('civil', 'Civil Engineering')], default='')
+    
+    type = SelectField('Type', choices=[('', 'All Role Type'), ('FTE+6M', 'FTE + 6M'), 
+                                        ('FTE', 'FTE'), 
+                                        ('Internship', 'Internship(2M/6M)')], default='')
+    
+    title = SelectField('Company', choices=[('', 'All Companies'), ('Amazon', 'Amazon'), 
+                                            ('Reliance', 'Reliance'),
+                                            ('Microsoft', 'Microsoft'), 
+                                            ('Vedantaa', 'Vedantaa'), 
+                                            ('MSCI', 'Morgan Stanley Capital International(MSCI)'),
+                                            ('Google', 'Google'),
+                                            ('Oracel', 'Oracel'),
+                                            ('Meesho', 'Meesho'), 
+                                            ('Zomato', 'Zomato'), 
+                                            ('Texas instrument', 'Texas Instrument')], default='')
+    
+    verdict = SelectField('Verdict', choices=[('', 'Verdict'), ('Selected', 'Selected'),
+                                              ('Not Selected', 'Not Selected')], default='')
+    
+    submit = SubmitField('Submit')
 
 
 class RegistrationForm(FlaskForm):
