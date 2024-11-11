@@ -53,7 +53,7 @@
             <!-- Upper Section -->
             <div class="upper-section">
             <div class="company-logo">
-                <img src="{{ url_for('static', filename='logos/' + post.title|lower + '.svg') }}" alt="Company Logo">
+                <img src="{{ url_for('static', filename='logos/' + post.title|lower + '.svg') }}" alt="{{ post.title }} Logo">
             </div>
             <div class="detail-section">
                 <div>{{ post.title }} | {{ post.role }} | {{ post.interview_date }}</div>
