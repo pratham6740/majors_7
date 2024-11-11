@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content%}
-<form class="filter" method="GET" action="{{ url_for('home') }}">
+<form class="filter" method="GET" action="{{ url_for('search') }}">
     {{ form.hidden_tag() }} <!-- This is for CSRF protection -->
     
         {{ form.branch() }}

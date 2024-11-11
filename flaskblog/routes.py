@@ -107,27 +107,28 @@ def summarise():
     results = data.get("results", [])
 
     # Create the document to summarize
-    prompt = "Generate the summary for the following experiences:"
+    prompt = "Generate the summary for the following experiences\n"
     for i, res in enumerate(results):
         if i >= 5:
             break
-        prompt += ". Next experience: " + res
+        prompt += " " + res+"\n"
 
     print("Prompt=",prompt)
 
     response = requests.post(
         url=os.getenv("url"),
         headers={
-            "Authorization": os.getenv("token"),
+            "Content-Type": "application/json",
+            "apy-token": os.getenv("token"),
         },
-        json=json.dumps({"inputs": prompt})
+        json={"text": prompt},
     )
 
     # Check for errors and extract summary
     if response.status_code == 200:
-        summary = response.json()[0]
-        print(summary)
-        return summary
+        summary = response.json()['data']['summary']
+        print(json.dumps({"summary_text":summary}))
+        return json.dumps({"summary_text": summary})
     else:
         # Log error response for debugging
         print("Error Response:", response.text)
