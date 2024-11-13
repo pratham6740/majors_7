@@ -27,10 +27,13 @@ class SearchForm(FlaskForm):
                                             ('Vedantaa', 'Vedantaa'), 
                                             ('MSCI', 'Morgan Stanley Capital International(MSCI)'),
                                             ('Google', 'Google'),
-                                            ('Oracel', 'Oracel'),
+                                            ('Oracle', 'Oracle'),
                                             ('Meesho', 'Meesho'), 
                                             ('Zomato', 'Zomato'), 
-                                            ('Texas instrument', 'Texas Instrument')], default='')
+                                            ('Texas instrument', 'Texas Instrument'),
+                                            ('Walmart', 'Walmart'),
+                                            ('Goldaman Sachs', 'Goladman Sachs'),
+                                            ('Deutsche Bank', 'Deutsche Bank')], default='')
     
     verdict = SelectField('Verdict', choices=[('', 'Verdict'), ('Selected', 'Selected'),
                                               ('Not Selected', 'Not Selected')], default='')
